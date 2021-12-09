@@ -124,7 +124,7 @@ def main():
     for (k, v) in train_args.items():
         run.log(k, v)
         run.parent.log(k, v)
-        print(f'Parent run was tagged with {k}: {v}')
+        print(f'Parent run log metric {k}: {v}')
 
     # Get the dataset
     if (dataset_name):
@@ -159,7 +159,7 @@ def main():
     for (k, v) in metrics.items():
         run.log(k, v)
         run.parent.log(k, v)
-        print(f'Parent run was tagged with {k}: {v}')
+        print(f'Parent run log metric {k}: {v}')
 
     # Pass model file to next step
     os.makedirs(step_output_path, exist_ok=True)
