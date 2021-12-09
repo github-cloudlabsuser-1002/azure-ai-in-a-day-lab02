@@ -98,6 +98,7 @@ if (args.run_id is not None):
     run_id = args.run_id
 if (run_id == 'amlcompute'):
     run_id = run.parent.id
+print(f'run_id is {run_id}')
 model_name = args.model_name
 metric_eval = "mse"
 
@@ -118,7 +119,12 @@ try:
         production_model_mse = 10000
         if (metric_eval in model.tags):
             production_model_mse = float(model.tags[metric_eval])
-        new_model_mse = float(run.parent.get_metrics().get(metric_eval))
+
+        parent_metrics = run.parent.get_metrics()
+        print(f'Parent metrics are {parent_metrics}')
+        print(f'Parent metric {metric_eval} is {parent_metrics.get(metric_eval)}')
+
+        new_model_mse = float(parent_metrics.get(metric_eval)) if parent_metrics.get(metric_eval) else None
         if (production_model_mse is None or new_model_mse is None):
             print("Unable to find", metric_eval, "metrics, "
                   "exiting evaluation")
