@@ -141,7 +141,10 @@ def main():
 
     # Link dataset to the step run so it is trackable in the UI
     run.input_datasets['training_data'] = dataset
+    
+    print(f'Parent run: {run.parent}')
     run.parent.tag("dataset_id", value=dataset.id)
+    print(f'Parent run was tagged with dataset_id: {dataset.id}')
 
     # Split the data into test/train
     df = dataset.to_pandas_dataframe()
@@ -155,6 +158,7 @@ def main():
     for (k, v) in metrics.items():
         run.log(k, v)
         run.parent.log(k, v)
+        print(f'Parent run was tagged with {k}: {v}')
 
     # Pass model file to next step
     os.makedirs(step_output_path, exist_ok=True)
