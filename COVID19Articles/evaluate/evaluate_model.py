@@ -128,8 +128,9 @@ try:
         if (production_model_mse is None or new_model_mse is None):
             print("Unable to find", metric_eval, "metrics, "
                   "exiting evaluation")
-            if((allow_run_cancel).lower() == 'true'):
-                run.parent.cancel()
+            print('For demo purposes, we will ignore this situation and still allow the model to be registered.')
+#             if((allow_run_cancel).lower() == 'true'):
+#                 run.parent.cancel()
         else:
             print(
                 "Current Production model mse: {}, "
