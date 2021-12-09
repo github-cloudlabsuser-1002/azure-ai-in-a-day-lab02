@@ -107,6 +107,10 @@ def main():
     dataset_name = args.dataset_name
 
     run = Run.get_context()
+    parent_run = run.parent
+
+    print(f'Run: {run}')
+    print(f'Parent run: {parent_run}')
 
     print("Getting training parameters")
 
@@ -123,7 +127,7 @@ def main():
     print(f"Parameters: {train_args}")
     for (k, v) in train_args.items():
         run.log(k, v)
-        run.parent.log(k, v)
+        parent_run.log(k, v)
         print(f'Parent run log metric {k}: {v}')
 
     # Get the dataset
@@ -143,8 +147,7 @@ def main():
     # Link dataset to the step run so it is trackable in the UI
     run.input_datasets['training_data'] = dataset
 
-    print(f'Parent run: {run.parent}')
-    run.parent.tag("dataset_id", value=dataset.id)
+    parent_run.tag("dataset_id", value=dataset.id)
     print(f'Parent run was tagged with dataset_id: {dataset.id}')
 
     # Split the data into test/train
@@ -158,7 +161,7 @@ def main():
     metrics = get_model_metrics(model, data)
     for (k, v) in metrics.items():
         run.log(k, v)
-        run.parent.log(k, v)
+        parent_run.log(k, v)
         print(f'Parent run log metric {k}: {v}')
 
     # Pass model file to next step
@@ -172,7 +175,8 @@ def main():
     joblib.dump(value=model, filename=output_path)
 
     run.tag("run_type", value="train")
-    print(f"tags now present for run: {run.tags}")
+    print(f"Tags for run: {run.tags}")
+    print(f'Tags for parent run: {parent_run.tags}')
 
     run.complete()
 
