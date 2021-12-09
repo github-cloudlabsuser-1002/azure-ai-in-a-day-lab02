@@ -144,8 +144,9 @@ try:
             else:
                 print("New trained model metric is worse than or equal to "
                       "production model so skipping model registration.")
-                if((allow_run_cancel).lower() == 'true'):
-                    run.parent.cancel()
+                print('For demo purposes, we will ignore this situation and still allow the model to be registered.')
+#                 if((allow_run_cancel).lower() == 'true'):
+#                     run.parent.cancel()
     else:
         print("This is the first model, "
               "thus it should be registered")
