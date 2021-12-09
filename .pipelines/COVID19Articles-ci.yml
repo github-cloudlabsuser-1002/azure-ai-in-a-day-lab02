@@ -89,7 +89,7 @@ stages:
     - task: ManualIntervention@8
       inputs:
         instructions: 'Please approve registered model'
-        emailRecipients: 'github_cloudlabsuser_1002@cloudlabsaiuser.com'
+        emailRecipients: github_cloudlabsuser_1002@cloudlabsaiuser.com
   - job: "Training_Run_Report"
     dependsOn: "Run_ML_Pipeline"
     condition: always()
