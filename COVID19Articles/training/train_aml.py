@@ -124,6 +124,7 @@ def main():
     for (k, v) in train_args.items():
         run.log(k, v)
         run.parent.log(k, v)
+        print(f'Parent run was tagged with {k}: {v}')
 
     # Get the dataset
     if (dataset_name):
@@ -141,7 +142,7 @@ def main():
 
     # Link dataset to the step run so it is trackable in the UI
     run.input_datasets['training_data'] = dataset
-    
+
     print(f'Parent run: {run.parent}')
     run.parent.tag("dataset_id", value=dataset.id)
     print(f'Parent run was tagged with dataset_id: {dataset.id}')
